@@ -76,8 +76,8 @@ return [
     | "app.url" config value, set this field to null.
     |
     */
-    'default_url' => null,
-    // 'default_url' => 'http://127.0.0.1:8000/',
+    // 'default_url' => null,
+    'default_url' => 'http://127.0.0.1:8000',
 
 
 

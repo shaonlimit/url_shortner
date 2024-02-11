@@ -26,13 +26,11 @@ class UrlShortnerController extends Controller
             'link.url' => 'The link must be a valid URL.',
         ]);
 
-        // $builder = new \AshAllenDesign\ShortURL\Classes\Builder();
+        $builder = new \AshAllenDesign\ShortURL\Classes\Builder();
 
-        $shortURL = ShortUrlBuilder::destinationUrl($request->link)
-            ->beforeCreate(function (ShortURL $model): void {
-                $model->user_id = auth()->user()->id;
-            })
-            ->make();
+        $shortURLObject = $builder->destinationUrl($request->link)->beforeCreate(function (ShortURL $model): void {
+            $model->user_id = auth()->user()->id;
+        })->trackVisits()->make();
         return redirect()->back();
     }
 

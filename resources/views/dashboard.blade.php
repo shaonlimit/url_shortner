@@ -10,8 +10,8 @@
         <title>Laravel URL Shortner</title>
     </head>
 
-    <body class="d-flex align-items-center justify-content-center vh-100">
-        <div class="text-center">
+    <body>
+        <div class="container text-center mt-5">
             <a href="{{ route("logout") }}" class="btn btn-info btn-sm text-white">Logout</a>
             <h1>Hello, {{ auth()->user()->name }}</h1>
             <div class="row">
@@ -32,7 +32,7 @@
                     </form>
                 </div>
 
-                <div class="col-md-12 mt-5">
+                <div class="col-md-12 mx-auto mt-5">
                     <table class="table table-bordered">
                         <thead>
                             <tr>
@@ -47,7 +47,7 @@
                                 <tr>
                                     <td><a href="{{ $link->destination_url }}" target="_blank">{{ $link->destination_url }}</a></td>
                                     <td><a href="{{ $link->default_short_url }}" target="_blank">{{ $link->default_short_url }}</a></td>
-                                    <td>{{ $link->track_visits }}</td>
+                                    <td>{{ $link->visits->count() }}</td>
                                     <td>
                                         <a href="{{ route("delete", $link->id) }}" class="btn btn-sm btn-danger text-white" onclick="return confirm('Are you sure you want to delete?')">
                                             Delete
