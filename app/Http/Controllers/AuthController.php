@@ -35,20 +35,23 @@ class AuthController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:users',
             'password' => 'required|min:8'
         ], [
             'name.required' => 'The name field is required.',
             'email.required' => 'The email field is required.',
             'email.email' => 'Please enter a valid email address.',
+            'email.unique' => 'This email address is already in use.',
             'password.required' => 'The password field is required.',
             'password.min' => 'The password must be at least :min characters long.',
         ]);
 
         try {
             User::create($request->all());
-            toastr()->success('Account created successfully! Please login', 'Congrats');
-            return redirect()->route('login');
+            toastr()->success('Account created successfully!', 'Congrats');
+            if (Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password')])) {
+                return redirect()->route('dashboard');
+            }
         } catch (Exception $e) {
             toastr()->error('Oops! Something went wrong!', 'Oops!');
             return redirect()->back();
